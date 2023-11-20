@@ -15,7 +15,6 @@ jobs:
 
       - name: Run test
         run: cargo test --all -- --nocapture
-        working-directory: discord-bot
 
   fmt:
     name: fmt Rust
@@ -26,7 +25,6 @@ jobs:
 
       - name: Run fmt
         run: cargo fmt --all -- --check
-        working-directory: discord-bot
 
   clipy:
     name: clippy Rust
@@ -37,4 +35,3 @@ jobs:
 
       - name: Run clipy
         run: cargo clippy --all-targets --all-features -- -D warnings
-        working-directory: discord-bot
