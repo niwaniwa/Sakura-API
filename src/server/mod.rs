@@ -11,10 +11,14 @@ use std::env;
 
 #[actix_web::main]
 pub async fn run() -> std::io::Result<()> {
-    HttpServer::new(|| App::new())
-        .bind("127.0.0.1:8080")?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .data(RequestContext::new())
+            .service(handler::account::post_account)
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
 }
 
 pub struct RequestContext {
