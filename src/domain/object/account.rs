@@ -12,7 +12,7 @@ impl Account {
             card_id,
         }
     }
-    pub fn register_card_id() -> u8 {
+    pub fn register_card_id() -> u64 {
         //TODO
         let card_id = 120;
         return card_id;
