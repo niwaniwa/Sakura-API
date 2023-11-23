@@ -998,6 +998,7 @@ dependencies = [
  "actix-web",
  "diesel",
  "dotenv",
+ "serde",
 ]
 
 [[package]]
