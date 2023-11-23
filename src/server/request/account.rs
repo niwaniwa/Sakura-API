@@ -8,6 +8,7 @@ pub struct AccountRequest {
 
 impl AccountRequest {
     pub fn of(&self) -> Account {
-        Account::create(self.username.to_owned())
+        let card_id = Account::register_card_id();
+        return Account::create(self.username.to_owned(), card_id.to_owned());
     }
 }
