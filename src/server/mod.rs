@@ -2,6 +2,7 @@ mod handler;
 mod request;
 mod response;
 
+use crate::domain::repository::account::AccountRepository;
 use actix_web::{App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -30,5 +31,13 @@ impl RequestContext {
             .expect("Failed to create DB connection pool.");
 
         RequestContext { pool }
+    }
+
+    pub fn account_repository(&self) -> impl AccountRepository {
+        use crate::infrastructures::repository::account::AccountRepositoryImpl;
+
+        return AccountRepositoryImpl {
+            pool: Box::new(self.pool.to_owned()),
+        };
     }
 }
