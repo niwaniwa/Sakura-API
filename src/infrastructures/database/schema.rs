@@ -6,5 +6,6 @@ diesel::table! {
         #[max_length = 255]
         username -> Varchar,
         card_id -> Bytea,
+        created_at -> Timestamptz,
     }
 }
