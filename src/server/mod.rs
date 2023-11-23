@@ -3,6 +3,7 @@ mod request;
 // mod response;
 
 use crate::domain::repository::account::AccountRepository;
+use actix_web::web::Data;
 use actix_web::{App, HttpServer};
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
@@ -13,7 +14,7 @@ use std::env;
 pub async fn run() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .data(RequestContext::new())
+            .app_data(Data::new(RequestContext::new()))
             .service(handler::account::post_account)
     })
     .bind("127.0.0.1:8080")?
@@ -40,8 +41,8 @@ impl RequestContext {
     pub fn account_repository(&self) -> impl AccountRepository {
         use crate::infrastructures::repository::account::AccountRepositoryImpl;
 
-        return AccountRepositoryImpl {
+        AccountRepositoryImpl {
             pool: Box::new(self.pool.to_owned()),
-        };
+        }
     }
 }

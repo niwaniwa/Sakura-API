@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Account {
     pub id: u64,
     pub username: String,
@@ -15,7 +16,7 @@ impl Account {
     pub fn register_card_id() -> Vec<u8> {
         //TODO
         let card_id: Vec<u8> = vec![1, 16, 3, 16, 197, 20, 106, 38];
-        return card_id;
+        card_id
     }
 }
 
