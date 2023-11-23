@@ -1,16 +1,9 @@
-use super::super::database::schema::account;
+use super::super::database::models::NewAccountEntity;
 use crate::domain::object::account::Account;
 use crate::domain::repository::account::AccountRepository;
 use anyhow::Result;
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
-
-#[derive(Debug, Insertable)]
-#[table_name = "account"]
-pub struct NewAccountEntity {
-    pub username: String,
-    pub card_id: Vec<u8>,
-}
 
 impl NewAccountEntity {
     pub fn new(username: String, card_id: Vec<u8>) -> Self {
