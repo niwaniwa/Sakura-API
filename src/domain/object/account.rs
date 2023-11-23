@@ -18,3 +18,20 @@ impl Account {
         return card_id;
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_create_account() {
+        let username = "test_user".to_string();
+        let card_id = [1, 16, 3, 16, 197, 20, 106, 38].to_vec();
+
+        let account = Account::create(username.clone(), card_id.clone());
+
+        assert_eq!(account.id, 0);
+        assert_eq!(account.username, username);
+        assert_eq!(account.card_id, card_id);
+    }
+}
