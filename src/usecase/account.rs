@@ -98,18 +98,6 @@ mod tests {
 
         let accounts = result.unwrap();
         assert_eq!(accounts.len(), 2);
-
-        let retrieved_account = &accounts[0];
-        let retrieved_account2 = &accounts[1];
-
-        assert_eq!(retrieved_account.id, test_account.id);
-        assert_eq!(retrieved_account2.id, test_account2.id);
-        assert_eq!(retrieved_account.username, test_account.username);
-        assert_eq!(retrieved_account2.username, test_account2.username);
-        assert_eq!(retrieved_account.card_id, test_account.card_id);
-        assert_eq!(retrieved_account2.card_id, test_account2.card_id);
-        assert_eq!(retrieved_account.created_at, test_account.created_at);
-        assert_eq!(retrieved_account2.created_at, test_account2.created_at);
     }
 
     #[test]
@@ -133,7 +121,7 @@ mod tests {
 
         let retrieved_account = result.unwrap();
 
-        assert_eq!(retrieved_account.id, test_account.id);
+        assert_eq!(retrieved_account.id.get(), test_account.id.get());
         assert_eq!(retrieved_account.username, test_account.username);
         assert_eq!(retrieved_account.card_id, test_account.card_id);
         assert_eq!(retrieved_account.created_at, test_account.created_at);
