@@ -1,4 +1,4 @@
-use super::super::database::models::NewAccountEntity;
+use super::super::database::models::{AccountEntity, NewAccountEntity};
 use crate::domain::object::account::Account;
 use crate::domain::repository::account::AccountRepository;
 use anyhow::Result;
@@ -24,6 +24,17 @@ impl NewAccountEntity {
     }
 }
 
+impl AccountEntity {
+    pub fn of(&self) -> Account {
+        Account {
+            id: self.id.to_owned(),
+            username: self.username.to_owned(),
+            card_id: self.card_id.to_owned(),
+            created_at: self.created_at.to_owned(),
+        }
+    }
+}
+
 pub struct AccountRepositoryImpl {
     pub pool: Box<Pool<ConnectionManager<PgConnection>>>,
 }
@@ -33,11 +44,21 @@ impl AccountRepository for AccountRepositoryImpl {
         use super::super::database::schema::account::dsl;
 
         let entity = NewAccountEntity::from(account);
-        let mut conn = self.pool.get().unwrap();
+        let mut conn = self.pool.get()?;
         diesel::insert_into(dsl::account)
             .values(entity)
             .execute(&mut conn)?;
 
         Ok(())
+    }
+
+    fn list(&self) -> Result<Vec<Account>> {
+        use super::super::database::schema::account::dsl;
+
+        let query = dsl::account.into_boxed();
+        let mut conn = self.pool.get()?;
+        let results: Vec<AccountEntity> = query.limit(100).load(&mut conn)?;
+
+        Ok(results.into_iter().map(|e| e.of()).collect())
     }
 }

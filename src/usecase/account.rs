@@ -6,6 +6,10 @@ pub fn post_account(repository: &mut impl AccountRepository, account: &Account) 
     repository.insert(account)
 }
 
+pub fn get_document_list(repository: impl AccountRepository) -> Result<Vec<Account>> {
+    repository.list()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
