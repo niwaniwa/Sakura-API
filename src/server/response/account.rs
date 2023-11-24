@@ -10,7 +10,7 @@ pub struct AccountListResopnse {
 impl AccountListResopnse {
     pub fn new(accounts: Vec<Account>) -> AccountListResopnse {
         AccountListResopnse {
-            accounts: accounts.iter().map(|a| AccountDto::new(&a)).collect(),
+            accounts: accounts.iter().map(|a| AccountDto::new(a)).collect(),
         }
     }
 }

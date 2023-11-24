@@ -29,7 +29,7 @@ async fn get_account(
     data: web::Data<RequestContext>,
     path_params: web::Path<(i64,)>,
 ) -> impl Responder {
-    let account_id = AccountId::new(path_params.into_inner().0.into());
+    let account_id = AccountId::new(path_params.into_inner().0);
     match usecase::account::get_account(&mut data.account_repository(), &account_id) {
         Ok(account) => HttpResponse::Ok().json(AccountDto::new(&account)),
         Err(_) => HttpResponse::InternalServerError().json(""),
