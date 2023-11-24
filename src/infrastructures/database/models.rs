@@ -8,3 +8,12 @@ pub struct NewAccountEntity {
     pub card_id: Vec<u8>,
     pub created_at: NaiveDateTime,
 }
+
+#[derive(Debug, Queryable, Identifiable, AsChangeset)]
+#[table_name = "account"]
+pub struct AccountEntity {
+    pub id: i64,
+    pub username: String,
+    pub card_id: Vec<u8>,
+    pub created_at: NaiveDateTime,
+}
