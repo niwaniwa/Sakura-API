@@ -3,7 +3,7 @@ use chrono::{Local, NaiveDateTime};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Account {
-    pub id: u64,
+    pub id: i64,
     pub username: String,
     pub card_id: Vec<u8>,
     pub created_at: NaiveDateTime,
