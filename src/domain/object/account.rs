@@ -43,7 +43,7 @@ mod tests {
 
         let account = Account::create(username.clone(), card_id.clone());
 
-        assert_eq!(account.id, 0);
+        assert_eq!(account.id.get(), 0);
         assert_eq!(account.username, username);
         assert_eq!(account.card_id, card_id);
     }

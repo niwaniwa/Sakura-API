@@ -26,7 +26,7 @@ pub struct AccountDto {
 impl AccountDto {
     pub fn new(model: &Account) -> AccountDto {
         AccountDto {
-            id: model.id.to_owned(),
+            id: model.id.get(),
             username: model.username.to_owned(),
             card_id: model.card_id.to_owned(),
             created_at: model.created_at.to_owned(),

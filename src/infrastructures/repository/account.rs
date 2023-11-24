@@ -1,5 +1,5 @@
 use super::super::database::models::{AccountEntity, NewAccountEntity};
-use crate::domain::object::account::Account;
+use crate::domain::object::account::{Account, AccountId};
 use crate::domain::repository::account::AccountRepository;
 use anyhow::Result;
 use chrono::NaiveDateTime;
@@ -27,7 +27,7 @@ impl NewAccountEntity {
 impl AccountEntity {
     pub fn of(&self) -> Account {
         Account {
-            id: self.id.to_owned(),
+            id: AccountId::new(self.id),
             username: self.username.to_owned(),
             card_id: self.card_id.to_owned(),
             created_at: self.created_at.to_owned(),

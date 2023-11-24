@@ -13,6 +13,7 @@ pub fn get_account_list(repository: &mut impl AccountRepository) -> Result<Vec<A
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::domain::object::account::AccountId;
     use chrono::Local;
     use std::cell::RefCell;
     use std::collections::HashMap;
@@ -28,7 +29,7 @@ mod tests {
             let _ = &self
                 .pool
                 .borrow_mut()
-                .entry(account.id)
+                .entry(account.id.get())
                 .or_insert_with(|| account.clone());
 
             Ok(())
@@ -46,7 +47,7 @@ mod tests {
         };
 
         let test_account = Account {
-            id: 1,
+            id: AccountId::new(1),
             username: "test_user".to_string(),
             card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
             created_at: Local::now().naive_local(),
@@ -64,14 +65,14 @@ mod tests {
         };
 
         let test_account = Account {
-            id: 1,
+            id: AccountId::new(1),
             username: "test_user".to_string(),
             card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
             created_at: Local::now().naive_local(),
         };
 
         let test_account2 = Account {
-            id: 2,
+            id: AccountId::new(2),
             username: "test_user2".to_string(),
             card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
             created_at: Local::now().naive_local(),
