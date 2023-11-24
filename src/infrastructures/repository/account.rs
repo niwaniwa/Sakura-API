@@ -61,4 +61,16 @@ impl AccountRepository for AccountRepositoryImpl {
 
         Ok(results.into_iter().map(|e| e.of()).collect())
     }
+
+    fn find_by_id(&self, account_id: &AccountId) -> Result<Account> {
+        use super::super::database::schema::account::dsl;
+        use super::super::database::schema::account::id;
+
+        let mut conn = self.pool.get()?;
+        let entity: AccountEntity = dsl::account
+            .filter(id.eq(account_id.get()))
+            .get_result(&mut conn)?;
+
+        Ok(entity.of())
+    }
 }

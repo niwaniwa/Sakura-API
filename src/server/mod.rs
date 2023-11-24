@@ -17,6 +17,7 @@ pub async fn run() -> std::io::Result<()> {
             .app_data(Data::new(RequestContext::new()))
             .service(handler::account::post_account)
             .service(handler::account::get_accounts)
+            .service(handler::account::get_account)
     })
     .bind("127.0.0.1:8080")?
     .run()

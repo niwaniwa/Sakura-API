@@ -1,4 +1,4 @@
-use crate::domain::object::account::Account;
+use crate::domain::object::account::{Account, AccountId};
 use crate::domain::repository::account::AccountRepository;
 use anyhow::Result;
 
@@ -8,6 +8,13 @@ pub fn post_account(repository: &mut impl AccountRepository, account: &Account) 
 
 pub fn get_account_list(repository: &mut impl AccountRepository) -> Result<Vec<Account>> {
     repository.list()
+}
+
+pub fn get_account(
+    repository: &mut impl AccountRepository,
+    account_id: &AccountId,
+) -> Result<Account> {
+    repository.find_by_id(account_id)
 }
 
 #[cfg(test)]
