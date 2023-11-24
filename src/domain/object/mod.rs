@@ -15,6 +15,9 @@ impl<T> Id<T> {
             _phantom: PhantomData,
         }
     }
+    pub fn get(&self) -> i64 {
+        self.id
+    }
 }
 
 impl<T> Default for Id<T> {
