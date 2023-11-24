@@ -45,6 +45,13 @@ mod tests {
             let accounts: Vec<Account> = self.pool.borrow().values().cloned().collect();
             Ok(accounts)
         }
+
+        fn find_by_id(&self, account_id: &AccountId) -> Result<Account> {
+            match self.pool.borrow().get(&account_id.get()) {
+                Some(account) => Ok(account.clone()),
+                None => Err(anyhow::anyhow!("Account not found")),
+            }
+        }
     }
 
     #[test]
@@ -61,7 +68,6 @@ mod tests {
         };
 
         let result = post_account(&mut repository, &test_account);
-        println!("{:?}", result);
         assert!(result.is_ok());
     }
 
@@ -91,7 +97,6 @@ mod tests {
         let result = get_account_list(&mut repository);
 
         let accounts = result.unwrap();
-        println!("{:?}", accounts);
         assert_eq!(accounts.len(), 2);
 
         let retrieved_account = &accounts[0];
@@ -105,5 +110,52 @@ mod tests {
         assert_eq!(retrieved_account2.card_id, test_account2.card_id);
         assert_eq!(retrieved_account.created_at, test_account.created_at);
         assert_eq!(retrieved_account2.created_at, test_account2.created_at);
+    }
+
+    #[test]
+    fn success_find_account_by_id() {
+        let mut repository = MockAccountRepository {
+            pool: RefCell::new(HashMap::new()),
+        };
+
+        let test_account = Account {
+            id: AccountId::new(1),
+            username: "test_user".to_string(),
+            card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+            created_at: Local::now().naive_local(),
+        };
+
+        let _ = repository.insert(&test_account);
+
+        let result = get_account(&mut repository, &test_account.id);
+
+        assert!(result.is_ok());
+
+        let retrieved_account = result.unwrap();
+
+        assert_eq!(retrieved_account.id, test_account.id);
+        assert_eq!(retrieved_account.username, test_account.username);
+        assert_eq!(retrieved_account.card_id, test_account.card_id);
+        assert_eq!(retrieved_account.created_at, test_account.created_at);
+    }
+
+    #[test]
+    fn failed_find_account_by_id() {
+        let mut repository = MockAccountRepository {
+            pool: RefCell::new(HashMap::new()),
+        };
+
+        let test_account = Account {
+            id: AccountId::new(1),
+            username: "test_user".to_string(),
+            card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+            created_at: Local::now().naive_local(),
+        };
+
+        let _ = repository.insert(&test_account);
+
+        let result = get_account(&mut repository, &AccountId::new(2));
+
+        assert!(result.is_err());
     }
 }
