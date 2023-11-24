@@ -20,7 +20,7 @@ mod tests {
     use anyhow::Result;
 
     struct MockAccountRepository {
-        pool: RefCell<HashMap<u64, Account>>,
+        pool: RefCell<HashMap<i64, Account>>,
     }
 
     impl AccountRepository for MockAccountRepository {
@@ -28,7 +28,7 @@ mod tests {
             let _ = &self
                 .pool
                 .borrow_mut()
-                .entry(1)
+                .entry(account.id)
                 .or_insert_with(|| account.clone());
 
             Ok(())
@@ -57,21 +57,45 @@ mod tests {
         assert!(result.is_ok());
     }
 
-    // #[test]
-    // fn success_get_accounts() {
-    //     let mut repository = MockAccountRepository {
-    //         pool: RefCell::new(HashMap::new()),
-    //     };
+    #[test]
+    fn success_get_accounts() {
+        let mut repository = MockAccountRepository {
+            pool: RefCell::new(HashMap::new()),
+        };
 
-    //     let test_account = Account {
-    //         id: 1,
-    //         username: "test_user".to_string(),
-    //         card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
-    //         created_at: Local::now().naive_local(),
-    //     };
+        let test_account = Account {
+            id: 1,
+            username: "test_user".to_string(),
+            card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+            created_at: Local::now().naive_local(),
+        };
 
-    //     repository.insert(&test_account);
+        let test_account2 = Account {
+            id: 2,
+            username: "test_user2".to_string(),
+            card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+            created_at: Local::now().naive_local(),
+        };
 
-    //     let result = get_account_list(&repository);
-    // }
+        let _ = repository.insert(&test_account);
+        let _ = repository.insert(&test_account2);
+
+        let result = get_account_list(&mut repository);
+
+        let accounts = result.unwrap();
+        println!("{:?}", accounts);
+        assert_eq!(accounts.len(), 2);
+
+        let retrieved_account = &accounts[0];
+        let retrieved_account2 = &accounts[1];
+
+        assert_eq!(retrieved_account.id, test_account.id);
+        assert_eq!(retrieved_account2.id, test_account2.id);
+        assert_eq!(retrieved_account.username, test_account.username);
+        assert_eq!(retrieved_account2.username, test_account2.username);
+        assert_eq!(retrieved_account.card_id, test_account.card_id);
+        assert_eq!(retrieved_account2.card_id, test_account2.card_id);
+        assert_eq!(retrieved_account.created_at, test_account.created_at);
+        assert_eq!(retrieved_account2.created_at, test_account2.created_at);
+    }
 }
