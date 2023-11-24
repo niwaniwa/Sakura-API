@@ -1,9 +1,11 @@
+use super::Id;
 use chrono::{Local, NaiveDateTime};
-// use chrono_tz::{Asia::Tokyo, Tz};
+
+pub type AccountId = Id<Account>;
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Account {
-    pub id: i64,
+    pub id: AccountId,
     pub username: String,
     pub card_id: Vec<u8>,
     pub created_at: NaiveDateTime,
