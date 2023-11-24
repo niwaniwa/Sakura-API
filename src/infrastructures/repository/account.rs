@@ -2,18 +2,24 @@ use super::super::database::models::NewAccountEntity;
 use crate::domain::object::account::Account;
 use crate::domain::repository::account::AccountRepository;
 use anyhow::Result;
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
 
 impl NewAccountEntity {
-    pub fn new(username: String, card_id: Vec<u8>) -> Self {
-        Self { username, card_id }
+    pub fn new(username: String, card_id: Vec<u8>, created_at: NaiveDateTime) -> Self {
+        Self {
+            username,
+            card_id,
+            created_at,
+        }
     }
 
     fn from(model: &Account) -> NewAccountEntity {
         NewAccountEntity {
             username: model.username.to_owned(),
             card_id: model.card_id.to_owned(),
+            created_at: model.created_at.to_owned(),
         }
     }
 }

@@ -1,8 +1,12 @@
+use chrono::{Local, NaiveDateTime};
+// use chrono_tz::{Asia::Tokyo, Tz};
+
 #[derive(Debug, Clone, Hash, PartialEq, Eq)]
 pub struct Account {
     pub id: u64,
     pub username: String,
     pub card_id: Vec<u8>,
+    pub created_at: NaiveDateTime,
 }
 
 impl Account {
@@ -11,6 +15,7 @@ impl Account {
             id: Default::default(),
             username,
             card_id,
+            created_at: create_time(),
         }
     }
     pub fn register_card_id() -> Vec<u8> {
@@ -18,6 +23,11 @@ impl Account {
         let card_id: Vec<u8> = vec![1, 16, 3, 16, 197, 20, 106, 38];
         card_id
     }
+}
+
+fn create_time() -> NaiveDateTime {
+    let local_now = Local::now();
+    local_now.naive_local()
 }
 
 #[cfg(test)]
