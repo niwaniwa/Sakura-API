@@ -6,7 +6,7 @@ pub fn post_account(repository: &mut impl AccountRepository, account: &Account) 
     repository.insert(account)
 }
 
-pub fn get_account_list(repository: impl AccountRepository) -> Result<Vec<Account>> {
+pub fn get_account_list(repository: &mut impl AccountRepository) -> Result<Vec<Account>> {
     repository.list()
 }
 
@@ -57,21 +57,21 @@ mod tests {
         assert!(result.is_ok());
     }
 
-    //     #[test]
-    //     fn success_get_accounts() {
-    //         let mut repository = MockAccountRepository {
-    //             pool: RefCell::new(HashMap::new()),
-    //         };
+    // #[test]
+    // fn success_get_accounts() {
+    //     let mut repository = MockAccountRepository {
+    //         pool: RefCell::new(HashMap::new()),
+    //     };
 
-    //         let test_account = Account {
-    //             id: 1,
-    //             username: "test_user".to_string(),
-    //             card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
-    //             created_at: Local::now().naive_local(),
-    //         };
+    //     let test_account = Account {
+    //         id: 1,
+    //         username: "test_user".to_string(),
+    //         card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+    //         created_at: Local::now().naive_local(),
+    //     };
 
-    //         repository.insert(&test_account);
+    //     repository.insert(&test_account);
 
-    //         // let result = get_document_list()
-    //     }
+    //     let result = get_account_list(&repository);
+    // }
 }
