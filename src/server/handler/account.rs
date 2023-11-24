@@ -18,7 +18,7 @@ async fn post_account(
 
 #[get("/accounts")]
 async fn get_accounts(data: web::Data<RequestContext>) -> impl Responder {
-    match usecase::account::get_document_list(data.account_repository()) {
+    match usecase::account::get_account_list(data.account_repository()) {
         Ok(accounts) => HttpResponse::Ok().json(AccountListResopnse::new(accounts)),
         Err(_) => HttpResponse::InternalServerError().json(""),
     }
