@@ -1,14 +1,11 @@
-use actix_web::{get, web, App, HttpServer, Responder};
+#[macro_use]
+extern crate diesel;
 
-#[get("/hello/{name}")]
-async fn greet(name: web::Path<String>) -> impl Responder {
-    format!("hello {}", name)
-}
+mod domain;
+mod infrastructures;
+mod server;
+mod usecase;
 
-#[actix_web::main]
-async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(greet))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+fn main() -> std::io::Result<()> {
+    server::run()
 }
