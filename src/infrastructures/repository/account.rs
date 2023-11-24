@@ -10,7 +10,7 @@ impl NewAccountEntity {
         Self { username, card_id }
     }
 
-    fn from(model: Account) -> NewAccountEntity {
+    fn from(model: &Account) -> NewAccountEntity {
         NewAccountEntity {
             username: model.username.to_owned(),
             card_id: model.card_id.to_owned(),
@@ -23,7 +23,7 @@ pub struct AccountRepositoryImpl {
 }
 
 impl AccountRepository for AccountRepositoryImpl {
-    fn insert(&self, account: Account) -> Result<()> {
+    fn insert(&self, account: &Account) -> Result<()> {
         use super::super::database::schema::account::dsl;
 
         let entity = NewAccountEntity::from(account);
