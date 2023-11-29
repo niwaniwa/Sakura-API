@@ -12,19 +12,20 @@ pub struct Account {
 }
 
 impl Account {
-    pub fn create(username: String, card_id: Vec<u8>) -> Self {
+    pub fn create(username: String) -> Self {
         Self {
             id: Default::default(),
             username,
-            card_id,
+            card_id: create_card_id(),
             created_at: create_time(),
         }
     }
-    pub fn register_card_id() -> Vec<u8> {
-        //TODO
-        let card_id: Vec<u8> = vec![1, 16, 3, 16, 197, 20, 106, 38];
-        card_id
-    }
+}
+
+fn create_card_id() -> Vec<u8> {
+    //TODO
+    let card_id: Vec<u8> = vec![1, 16, 3, 16, 197, 20, 106, 38];
+    card_id
 }
 
 fn create_time() -> NaiveDateTime {
@@ -41,7 +42,7 @@ mod tests {
         let username = "test_user".to_string();
         let card_id = [1, 16, 3, 16, 197, 20, 106, 38].to_vec();
 
-        let account = Account::create(username.clone(), card_id.clone());
+        let account = Account::create(username.clone());
 
         assert_eq!(account.id.get(), 0);
         assert_eq!(account.username, username);
