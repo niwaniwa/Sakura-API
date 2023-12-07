@@ -3,7 +3,7 @@ use super::super::response::account::{AccountDto, AccountListResopnse};
 use crate::domain::object::account::AccountId;
 use crate::server::RequestContext;
 use crate::usecase;
-use actix_web::{get, post, web, web::Json, HttpResponse, Responder};
+use actix_web::{delete, get, post, web, web::Json, HttpResponse, Responder};
 
 #[post("/accounts")]
 async fn post_account(
@@ -32,6 +32,18 @@ async fn get_account(
     let account_id = AccountId::new(path_params.into_inner().0);
     match usecase::account::get_account(&mut data.account_repository(), &account_id) {
         Ok(account) => HttpResponse::Ok().json(AccountDto::new(&account)),
+        Err(_) => HttpResponse::InternalServerError().json(""),
+    }
+}
+
+#[delete("/accounts/{id}")]
+async fn delete_account(
+    data: web::Data<RequestContext>,
+    path_params: web::Path<(i64,)>,
+) -> impl Responder {
+    let account_id = AccountId::new(path_params.into_inner().0);
+    match usecase::account::delete_account(&mut data.account_repository(), &account_id) {
+        Ok(_) => HttpResponse::NoContent().finish(),
         Err(_) => HttpResponse::InternalServerError().json(""),
     }
 }

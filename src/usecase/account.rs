@@ -17,6 +17,14 @@ pub fn get_account(
     repository.find_by_id(account_id)
 }
 
+pub fn delete_account(
+    repository: &mut impl AccountRepository,
+    account_id: &AccountId,
+) -> Result<()> {
+    let account = repository.find_by_id(account_id).unwrap();
+    repository.delete(&account)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
