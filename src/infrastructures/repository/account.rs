@@ -7,9 +7,17 @@ use diesel::prelude::*;
 use diesel::r2d2::{ConnectionManager, Pool};
 
 impl NewAccountEntity {
-    pub fn new(username: String, card_id: Vec<u8>, created_at: NaiveDateTime) -> Self {
+    pub fn new(
+        username: String,
+        grade: i32,
+        card_type: String,
+        card_id: Vec<u8>,
+        created_at: NaiveDateTime,
+    ) -> Self {
         Self {
             username,
+            grade,
+            card_type,
             card_id,
             created_at,
         }
@@ -18,6 +26,8 @@ impl NewAccountEntity {
     fn from(model: &Account) -> NewAccountEntity {
         NewAccountEntity {
             username: model.username.to_owned(),
+            grade: model.grade.to_owned(),
+            card_type: model.card_type.to_owned(),
             card_id: model.card_id.to_owned(),
             created_at: model.created_at.to_owned(),
         }
@@ -29,6 +39,8 @@ impl AccountEntity {
         Account {
             id: AccountId::new(self.id),
             username: self.username.to_owned(),
+            grade: self.grade.to_owned(),
+            card_type: self.card_type.to_owned(),
             card_id: self.card_id.to_owned(),
             created_at: self.created_at.to_owned(),
         }

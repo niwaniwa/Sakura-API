@@ -7,15 +7,19 @@ pub type AccountId = Id<Account>;
 pub struct Account {
     pub id: AccountId,
     pub username: String,
+    pub grade: i32,
+    pub card_type: String,
     pub card_id: Vec<u8>,
     pub created_at: NaiveDateTime,
 }
 
 impl Account {
-    pub fn create(username: String) -> Self {
+    pub fn create(username: String, grade: i32, card_type: String) -> Self {
         Self {
             id: Default::default(),
             username,
+            grade,
+            card_type,
             card_id: create_card_id(),
             created_at: create_time(),
         }
@@ -40,9 +44,11 @@ mod tests {
     #[test]
     fn test_create_account() {
         let username = "test_user".to_string();
+        let grade = 4;
+        let card_type = "Suica".to_string();
         let card_id = [1, 16, 3, 16, 197, 20, 106, 38].to_vec();
 
-        let account = Account::create(username.clone());
+        let account = Account::create(username.clone(), grade.clone(), card_type.clone());
 
         assert_eq!(account.id.get(), 0);
         assert_eq!(account.username, username);
