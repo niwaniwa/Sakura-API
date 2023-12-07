@@ -48,7 +48,7 @@ mod tests {
         let card_type = "Suica".to_string();
         let card_id = [1, 16, 3, 16, 197, 20, 106, 38].to_vec();
 
-        let account = Account::create(username.clone(), grade.clone(), card_type.clone());
+        let account = Account::create(username.clone(), grade, card_type.clone());
 
         assert_eq!(account.id.get(), 0);
         assert_eq!(account.username, username);
