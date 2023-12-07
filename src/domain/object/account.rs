@@ -20,6 +20,9 @@ impl Account {
             username,
             grade,
             card_type,
+            card_id: create_card_id(),
+            created_at: create_time(),
+        }
     }
 }
 
