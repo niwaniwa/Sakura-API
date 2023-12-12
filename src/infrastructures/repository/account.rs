@@ -98,7 +98,7 @@ impl AccountRepository for AccountRepositoryImpl {
 
     fn delete(&self, account: &Account) -> Result<()> {
         let entity = AccountEntity::from(account);
-        let mut conn = self.pool.get().unwrap();
+        let mut conn = self.pool.get()?;
         diesel::delete(&entity).execute(&mut conn);
 
         Ok(())
