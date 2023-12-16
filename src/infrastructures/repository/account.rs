@@ -35,7 +35,17 @@ impl NewAccountEntity {
 }
 
 impl AccountEntity {
-    pub fn of(&self) -> Account {
+    fn from(model: &Account) -> AccountEntity {
+        AccountEntity {
+            id: model.id.get(),
+            username: model.username.to_owned(),
+            grade: model.grade.to_owned(),
+            card_type: model.card_type.to_owned(),
+            card_id: model.card_id.to_owned(),
+            created_at: model.created_at.to_owned(),
+        }
+    }
+    fn of(&self) -> Account {
         Account {
             id: AccountId::new(self.id),
             username: self.username.to_owned(),
@@ -84,5 +94,13 @@ impl AccountRepository for AccountRepositoryImpl {
             .get_result(&mut conn)?;
 
         Ok(entity.of())
+    }
+
+    fn delete(&self, account: &Account) -> Result<()> {
+        let entity = AccountEntity::from(account);
+        let mut conn = self.pool.get()?;
+        diesel::delete(&entity).execute(&mut conn)?;
+
+        Ok(())
     }
 }
