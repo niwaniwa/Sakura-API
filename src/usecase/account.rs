@@ -60,6 +60,10 @@ mod tests {
                 None => Err(anyhow::anyhow!("Account not found")),
             }
         }
+        fn delete(&self, account: &Account) -> Result<()> {
+            let _ = &self.pool.borrow_mut().remove(&account.id.get());
+            Ok(())
+        }
     }
 
     #[test]
@@ -165,5 +169,27 @@ mod tests {
         let result = get_account(&mut repository, &AccountId::new(2));
 
         assert!(result.is_err());
+    }
+
+    #[test]
+    fn success_delete_account() {
+        let mut repository = MockAccountRepository {
+            pool: RefCell::new(HashMap::new()),
+        };
+
+        let test_account = Account {
+            id: AccountId::new(1),
+            username: "test_user".to_string(),
+            grade: 4,
+            card_type: "Suica".to_string(),
+            card_id: vec![1, 16, 3, 16, 197, 20, 106, 38],
+            created_at: Local::now().naive_local(),
+        };
+
+        let _ = post_account(&mut repository, &test_account);
+
+        let _ = delete_account(&mut repository, &test_account.id);
+
+        assert!(get_account(&mut repository, &test_account.id).is_err())
     }
 }
