@@ -55,7 +55,7 @@ impl RegisterRepository for RegisterRepositoryImpl {
     }
 
     fn get_card(&self) -> String {
-        if let Some(value) = card_get("key1") {
+        if let Some(value) = card_get("card") {
             value
         } else {
             "".to_string()
@@ -67,6 +67,6 @@ impl RegisterRepository for RegisterRepositoryImpl {
     }
 
     fn add_card(&self, card: String) {
-        card_insert("card".to_string(), card, 5);
+        card_insert("card".to_string(), card, 60);
     }
 }
