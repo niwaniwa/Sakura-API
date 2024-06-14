@@ -16,10 +16,7 @@ impl MqttConnection {
     }
 
     pub fn mqtt_client_repository(&self) -> impl MqttClientRepository {
-        let address = env::var("MQTT_URL").expect("MQTT_URL is not set");
-        let host = env::args()
-            .nth(1)
-            .unwrap_or_else(|| "mqtt://".to_string() + &address);
+        let host = env::var("MQTT_URL").expect("MQTT_URL is not set");
 
         let create_opts = paho_mqtt::CreateOptionsBuilder::new()
             .server_uri(host)
