@@ -1,5 +1,5 @@
-use base64::Engine;
 use base64::engine::general_purpose;
+use base64::Engine;
 use paho_mqtt::{AsyncClient, Message};
 
 use crate::domain::object::door::Door;

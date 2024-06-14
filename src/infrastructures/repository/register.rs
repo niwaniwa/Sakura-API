@@ -4,7 +4,7 @@ use std::sync::RwLock;
 
 use once_cell::sync::Lazy;
 use tokio::sync::Mutex;
-use tokio::time::{Duration, sleep};
+use tokio::time::{sleep, Duration};
 
 use crate::domain::repository::register::RegisterRepository;
 
