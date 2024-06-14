@@ -1,5 +1,5 @@
-use base64::engine::general_purpose;
 use base64::Engine;
+use base64::engine::general_purpose;
 use paho_mqtt::{AsyncClient, Message};
 
 use crate::domain::object::door::Door;
@@ -46,9 +46,15 @@ pub fn check_card(
 
     if _data.register_repository().is_register_mode() {
         _data.register_repository().add_card(card.id.clone());
+        return;
     }
 
     let decoded_id = general_purpose::STANDARD.decode(card.id.clone()).unwrap();
+
+    if let Err(e) = _data.card_repository().find_by_card_number(&decoded_id) {
+        println!("Error: {}", e);
+        return;
+    }
 
     if !_data
         .card_repository()
