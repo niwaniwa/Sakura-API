@@ -55,3 +55,20 @@ pub struct DoorEntity {
     pub door_state: bool,
     pub door_switch_state: bool,
 }
+
+#[derive(Debug, Insertable)]
+#[table_name = "auth"]
+pub struct NewAuthEntity {
+    pub email: String,
+    pub password: String,
+    pub created_at: NaiveDateTime,
+}
+
+#[derive(Debug, Queryable, Identifiable, AsChangeset)]
+#[table_name = "auth"]
+pub struct AuthEntity {
+    pub id: i64,
+    pub email: String,
+    pub password: String,
+    pub created_at: NaiveDateTime,
+}
