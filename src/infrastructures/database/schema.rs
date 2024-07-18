@@ -8,6 +8,21 @@ diesel::table! {
         grade -> Int4,
         expiration_date -> Timestamptz,
         created_at -> Timestamptz,
+        #[max_length = 100]
+        email -> Varchar,
+        #[max_length = 255]
+        password -> Varchar,
+    }
+}
+
+diesel::table! {
+    auth (id) {
+        id -> Int8,
+        #[max_length = 100]
+        email -> Varchar,
+        #[max_length = 255]
+        password -> Varchar,
+        created_at -> Timestamptz,
     }
 }
 
@@ -33,4 +48,4 @@ diesel::table! {
 
 diesel::joinable!(card -> account (account_id));
 
-diesel::allow_tables_to_appear_in_same_query!(account, card, door,);
+diesel::allow_tables_to_appear_in_same_query!(account, auth, card, door,);
