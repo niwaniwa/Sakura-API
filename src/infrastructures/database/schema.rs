@@ -12,6 +12,7 @@ diesel::table! {
         email -> Varchar,
         #[max_length = 255]
         password -> Varchar,
+        auth_id -> Int8,
     }
 }
 
@@ -46,6 +47,12 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(account -> auth (auth_id));
 diesel::joinable!(card -> account (account_id));
 
-diesel::allow_tables_to_appear_in_same_query!(account, auth, card, door,);
+diesel::allow_tables_to_appear_in_same_query!(
+    account,
+    auth,
+    card,
+    door,
+);
