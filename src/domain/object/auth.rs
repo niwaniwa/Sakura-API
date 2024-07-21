@@ -15,11 +15,11 @@ pub struct Auth {
 }
 
 impl Auth {
-    pub fn new(email: String, password: String) -> Self {
+    pub fn new(email: &str, password: &str) -> Self {
         Self {
             id: Default::default(),
-            email,
-            password,
+            email: email.to_string(),
+            password: password.to_string(),
             created_at: create_time(),
         }
     }
