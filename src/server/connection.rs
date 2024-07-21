@@ -5,10 +5,12 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use dotenv::dotenv;
 
 use crate::domain::repository::account::AccountRepository;
+use crate::domain::repository::auth::AuthRepository;
 use crate::domain::repository::card::CardRepository;
 use crate::domain::repository::door::DoorRepository;
 use crate::domain::repository::register::RegisterRepository;
 use crate::infrastructures::repository::account::AccountRepositoryImpl;
+use crate::infrastructures::repository::auth::AuthRepositoryImpl;
 use crate::infrastructures::repository::card::CardRepositoryImpl;
 use crate::infrastructures::repository::door::DoorRepositoryImpl;
 use crate::infrastructures::repository::register::RegisterRepositoryImpl;
@@ -48,5 +50,11 @@ impl RequestContext {
 
     pub fn register_repository(&self) -> impl RegisterRepository {
         RegisterRepositoryImpl {}
+    }
+
+    pub fn auth_repository(&self) -> impl AuthRepository {
+        AuthRepositoryImpl {
+            pool: Box::new(self.pool.to_owned()),
+        }
     }
 }
