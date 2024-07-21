@@ -41,4 +41,8 @@ impl Auth {
             Err(errors)
         }
     }
+
+    pub fn hash_password(password: &str) -> Result<String, BcryptError> {
+        hash(password, DEFAULT_COST)
+    }
 }
