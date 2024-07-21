@@ -23,4 +23,22 @@ impl Auth {
             created_at: create_time(),
         }
     }
+
+    pub fn validate(email: &str, password: &str) -> Result<(), ValidationErrors> {
+        let mut errors = ValidationErrors::new();
+        if !ValidateEmail::validate_email(&email) {
+            errors.add("email", ValidationError::new("Invalid email format"));
+        }
+        if password.len() < 8 {
+            errors.add(
+                "password",
+                ValidationError::new("Password must be at least 8 characters long"),
+            );
+        }
+        if errors.is_empty() {
+            Ok(())
+        } else {
+            Err(errors)
+        }
+    }
 }
