@@ -18,6 +18,14 @@ services:
       - ./docker/db-store:/var/lib/postgresql/data
     networks:
       - sakura-internal
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./docker/redis:/data"
+    networks:
+      - sakura-internal
   main:
     build:
       context: .
@@ -28,10 +36,12 @@ services:
       - .config.yaml:/app/Sakura-API
     depends_on:
       - db
+      - redis
     ports:
       - 8080:8080
     environment:
       DATABASE_URL: postgres://sakura:password@db:5432/sakura
+      REDIS_URL: redis://redis:6379
     networks:
       - sakura-internal
       - sakura-external
