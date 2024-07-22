@@ -48,13 +48,25 @@ pub struct AuthRepositoryImpl {
     pub pool: Box<Pool<ConnectionManager<PgConnection>>>,
 }
 
-// impl AuthRepository for AuthRepositoryImpl {
-//     fn signup(&self, auth: &Auth) -> anyhow::Result<()> {
-//         use super::super::database::schema::auth::dsl;
+impl AuthRepository for AuthRepositoryImpl {
+    // fn signup(&self, auth: &Auth) -> anyhow::Result<()> {
+    //     use super::super::database::schema::auth::dsl;
 
-//         let entity = NewAuthEntity::from(auth);
-//         let mut conn = self.pool.get()?;
-//         diesel::
+    //     let entity = NewAuthEntity::from(auth);
+    //     let mut conn = self.pool.get()?;
+    //     diesel::
 
-//     }
-// }
+    // }
+    fn exist_by_email(&self, email: &str) -> anyhow::Result<bool> {
+        use super::super::database::schema::auth::dsl;
+
+        let mut conn = self.pool.get()?;
+        let query = dsl::auth.filter(dsl::email.eq(email));
+
+        match query.first::<AuthEntity>(&mut conn) {
+            Ok(_) => Ok(true),
+            Err(diesel::result::Error::NotFound) => Ok(false),
+            Err(err) => Err(anyhow::Error::new(err)),
+        }
+    }
+}
