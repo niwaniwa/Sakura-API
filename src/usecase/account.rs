@@ -41,6 +41,7 @@ pub fn delete_account(
 mod tests {
     use super::*;
     use crate::domain::object::account::AccountId;
+    use crate::domain::object::auth::AuthId;
     use crate::domain::object::card::{Card, CardId};
     use crate::domain::repository::card::CardRepository;
     use crate::tests::mock_account_repository::MockAccountRepository;
@@ -57,6 +58,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -75,6 +77,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -83,6 +86,7 @@ mod tests {
 
         let test_account2 = Account {
             id: AccountId::new(2),
+            auth_id: AuthId::new(2),
             username: "test_user2".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -106,6 +110,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -121,6 +126,7 @@ mod tests {
         let retrieved_account = result.unwrap();
 
         assert_eq!(retrieved_account.id.get(), test_account.id.get());
+        assert_eq!(retrieved_account.auth_id.get(), test_account.auth_id.get());
         assert_eq!(retrieved_account.username, test_account.username);
         assert_eq!(retrieved_account.grade, test_account.grade);
         assert_eq!(
@@ -138,6 +144,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -159,6 +166,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -166,6 +174,7 @@ mod tests {
         };
 
         let update_account = AccountRequest {
+            auth_id: AuthId::new(1),
             username: "update_user".to_string(),
             grade: 3,
             expiration_date: Local::now().naive_local() + Duration::hours(2),
@@ -184,6 +193,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -208,6 +218,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),

@@ -9,6 +9,7 @@ pub struct NewAccountEntity {
     pub grade: i32,
     pub expiration_date: NaiveDateTime,
     pub created_at: NaiveDateTime,
+    pub auth_id: i64,
 }
 
 #[derive(Debug, Queryable, Identifiable, AsChangeset)]
@@ -19,6 +20,7 @@ pub struct AccountEntity {
     pub grade: i32,
     pub expiration_date: NaiveDateTime,
     pub created_at: NaiveDateTime,
+    pub auth_id: i64,
 }
 
 #[derive(Debug, Insertable)]

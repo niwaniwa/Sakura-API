@@ -70,6 +70,7 @@ mod tests {
     use super::*;
     use crate::domain::object::{
         account::{Account, AccountId},
+        auth::AuthId,
         card::{Card, CardId},
     };
     use crate::tests::{
@@ -92,6 +93,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -125,6 +127,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -170,6 +173,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -217,6 +221,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -251,6 +256,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),
@@ -292,6 +298,7 @@ mod tests {
 
         let test_account = Account {
             id: AccountId::new(1),
+            auth_id: AuthId::new(1),
             username: "test_user".to_string(),
             grade: 4,
             expiration_date: Local::now().naive_local() + Duration::hours(1),

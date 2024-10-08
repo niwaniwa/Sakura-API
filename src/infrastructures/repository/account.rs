@@ -1,5 +1,6 @@
 use super::super::database::models::{AccountEntity, NewAccountEntity};
 use crate::domain::object::account::{Account, AccountId};
+use crate::domain::object::auth::AuthId;
 use crate::domain::repository::account::AccountRepository;
 use anyhow;
 use chrono::NaiveDateTime;
@@ -8,12 +9,14 @@ use diesel::r2d2::{ConnectionManager, Pool};
 
 impl NewAccountEntity {
     pub fn new(
+        auth_id: AuthId,
         username: String,
         grade: i32,
         expiration_date: NaiveDateTime,
         created_at: NaiveDateTime,
     ) -> Self {
         Self {
+            auth_id: auth_id.get().to_owned(),
             username,
             grade,
             expiration_date,
@@ -23,6 +26,7 @@ impl NewAccountEntity {
 
     fn from(model: &Account) -> NewAccountEntity {
         NewAccountEntity {
+            auth_id: model.auth_id.get().to_owned(),
             username: model.username.to_owned(),
             grade: model.grade.to_owned(),
             expiration_date: model.expiration_date.to_owned(),
@@ -35,6 +39,7 @@ impl AccountEntity {
     fn from(model: &Account) -> AccountEntity {
         AccountEntity {
             id: model.id.get(),
+            auth_id: model.auth_id.get().to_owned(),
             username: model.username.to_owned(),
             grade: model.grade.to_owned(),
             expiration_date: model.expiration_date.to_owned(),
@@ -44,6 +49,7 @@ impl AccountEntity {
     fn of(&self) -> Account {
         Account {
             id: AccountId::new(self.id),
+            auth_id: AuthId::new(self.auth_id),
             username: self.username.to_owned(),
             grade: self.grade.to_owned(),
             expiration_date: self.expiration_date.to_owned(),
