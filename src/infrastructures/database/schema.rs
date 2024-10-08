@@ -8,10 +8,6 @@ diesel::table! {
         grade -> Int4,
         expiration_date -> Timestamptz,
         created_at -> Timestamptz,
-        #[max_length = 100]
-        email -> Varchar,
-        #[max_length = 255]
-        password -> Varchar,
         auth_id -> Int8,
     }
 }
@@ -54,5 +50,4 @@ diesel::allow_tables_to_appear_in_same_query!(
     account,
     auth,
     card,
-    door,
-);
+    door,);
